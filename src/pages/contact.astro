@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import ContactFormComponent from '../components/ContactForm.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFAB from '../components/WhatsAppFAB.astro';
+import { translations } from '../data/translations';
+
+const lang = 'en';
+const t = translations[lang];
+
+const pageCopy = {
+  title: 'Contact Our Specialists',
+  subtitle: 'We serve the entire Klang Valley region. Get in touch for rapid emergency repairs or project sebut harga.',
+  backHome: '← Back to Home'
+};
+---
+
+<Layout lang={lang} title={`${pageCopy.title} | JGR Civil Works`} description="Get in touch with JGR Civil Works. Complete our contact form, call our 24/7 emergency dispatch line, email our offices, or visit us in Kepong, KL.">
+  <Header lang={lang} />
+  
+  <main class="contact-page-main">
+    <!-- Contact Hero -->
+    <section class="contact-hero">
+      <div class="container animate-slideup">
+        <a href="/" class="back-home-link">{pageCopy.backHome}</a>
+        <span class="badge">Immediate Response Guarantee</span>
+        <h1 class="contact-hero-title">{pageCopy.title}</h1>
+        <p class="contact-hero-subtitle">{pageCopy.subtitle}</p>
+      </div>
+    </section>
+
+    <!-- Full Contact Form with Maps -->
+    <ContactFormComponent lang={lang} />
+  </main>
+
+  <Footer lang={lang} />
+  <WhatsAppFAB lang={lang} />
+</Layout>
+
+<style>
+  .contact-page-main {
+    padding-top: var(--header-height);
+  }
+
+  .contact-hero {
+    background-color: var(--color-bg-alt);
+    border-bottom: 1px solid var(--color-border);
+    padding: 60px 0 80px 0;
+  }
+
+  .back-home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-accent);
+    margin-bottom: 25px;
+    transition: var(--transition-fast);
+  }
+
+  .back-home-link:hover {
+    color: var(--color-accent-dark);
+    transform: translateX(-4px);
+  }
+
+  .contact-hero-title {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+  }
+
+  .contact-hero-subtitle {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    max-width: 850px;
+  }
+</style>

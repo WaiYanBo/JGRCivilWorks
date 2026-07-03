@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import GalleryComponent from '../components/Gallery.astro';
+import VideoGallery from '../components/VideoGallery.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFAB from '../components/WhatsAppFAB.astro';
+import { translations } from '../data/translations';
+
+const lang = 'en';
+const t = translations[lang];
+
+const pageCopy = {
+  title: 'Project Gallery & Showcases',
+  subtitle: 'View real before & after results and project videos of JGR Civil Works in action.',
+  backHome: '← Back to Home'
+};
+---
+
+<Layout lang={lang} title={`${pageCopy.title} | JGR Civil Works`} description="Browse JGR Civil Works projects gallery. Interactive before-and-after sliders and YouTube video walkthroughs of waterproofing, plumbing, and electrical works.">
+  <Header lang={lang} />
+  
+  <main class="gallery-page-main">
+    <!-- Gallery Hero -->
+    <section class="gallery-hero">
+      <div class="container animate-slideup">
+        <a href="/" class="back-home-link">{pageCopy.backHome}</a>
+        <span class="badge">Visual Proof of Quality</span>
+        <h1 class="gallery-hero-title">{pageCopy.title}</h1>
+        <p class="gallery-hero-subtitle">{pageCopy.subtitle}</p>
+      </div>
+    </section>
+
+    <!-- Full Gallery Component with Filters -->
+    <GalleryComponent lang={lang} />
+
+    <!-- Full Video Gallery Component -->
+    <VideoGallery lang={lang} />
+  </main>
+
+  <Footer lang={lang} />
+  <WhatsAppFAB lang={lang} />
+</Layout>
+
+<style>
+  .gallery-page-main {
+    padding-top: var(--header-height);
+  }
+
+  .gallery-hero {
+    background-color: var(--color-bg-alt);
+    border-bottom: 1px solid var(--color-border);
+    padding: 60px 0 80px 0;
+  }
+
+  .back-home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-accent);
+    margin-bottom: 25px;
+    transition: var(--transition-fast);
+  }
+
+  .back-home-link:hover {
+    color: var(--color-accent-dark);
+    transform: translateX(-4px);
+  }
+
+  .gallery-hero-title {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+  }
+
+  .gallery-hero-subtitle {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    max-width: 850px;
+  }
+</style>

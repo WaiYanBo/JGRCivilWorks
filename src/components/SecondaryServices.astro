@@ -9,14 +9,12 @@ const { lang } = Astro.props;
 const t = translations[lang];
 
 // Setup WhatsApp helper function
-const whatsappNumber = '60123456789';
-const encodedMsg = encodeURIComponent(t.whatsappMsg.general);
-const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMsg}`;
+const whatsappUrl = 'https://webjgrcw.wasap.my';
 ---
 
 <section id="secondary" class="section section-alt">
   <div class="container">
-    <div class="text-center">
+    <div class="text-center reveal">
       <span class="badge">{t.nav.secondary}</span>
       <h2 class="section-title">{t.secondary.title}</h2>
       <p class="section-subtitle">{t.secondary.subtitle}</p>
@@ -24,7 +22,7 @@ const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMsg}`;
 
     <div class="grid-3 secondary-grid">
       {t.secondary.list.map((item, index) => (
-        <div class="secondary-card animate-hover" id={`secondary-card-${index}`}>
+        <div class={`secondary-card animate-hover reveal delay-${(index + 1) * 100}`} id={`secondary-card-${index}`}>
           <div class="card-top-accent"></div>
           
           <div class="secondary-header">

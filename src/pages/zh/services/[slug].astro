@@ -1,0 +1,282 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Gallery from '../../../components/Gallery.astro';
+import VideoGallery from '../../../components/VideoGallery.astro';
+import ContactForm from '../../../components/ContactForm.astro';
+import Footer from '../../../components/Footer.astro';
+import WhatsAppFAB from '../../../components/WhatsAppFAB.astro';
+import { translations } from '../../../data/translations';
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'roof-leak-repair' } },
+    { params: { slug: 'plumbing-services' } },
+    { params: { slug: 'electrical-wiring' } },
+    { params: { slug: 'handyman-services' } }
+  ];
+}
+
+const { slug } = Astro.params;
+const lang = 'zh';
+const t = translations[lang];
+
+// Locate specific service data
+const service = t.core4.services.find(s => s.slug === slug);
+if (!service) {
+  throw new Error(`Service not found for slug: ${slug}`);
+}
+
+const whatsappUrl = 'https://webjgrcw.wasap.my';
+---
+
+<Layout lang={lang} title={service.meta.title} description={service.meta.description}>
+  <Header lang={lang} />
+  
+  <main class="service-page-main">
+    <!-- Service Page Hero Header -->
+    <section class="service-hero">
+      <div class="container hero-container animate-slideup">
+        <a href={`/${lang}`} class="back-home-link">{t.servicePage.backToHome}</a>
+        
+        <span class="badge service-badge">{service.title}</span>
+        <h1 class="service-hero-title">{service.title}</h1>
+        <p class="service-hero-desc">{service.intro}</p>
+        
+        <div class="service-hero-actions">
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>{t.servicePage.getQuoteBtn}</span>
+          </a>
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>{t.hero.ctaCall}</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detailed Content Columns -->
+    <section class="section service-details-section">
+      <div class="container">
+        <div class="grid-2 details-layout-grid">
+          <!-- Details Left -->
+          <div class="details-left reveal">
+            <h2 class="details-section-heading">{t.servicePage.whyChooseTitle}</h2>
+            <ul class="detailed-capabilities-list">
+              {service.details.map((detail) => (
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span>{detail}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- FAQ Accordion Right -->
+          <div class="details-right reveal delay-200">
+            <h2 class="details-section-heading">{t.servicePage.faqSectionTitle}</h2>
+            <div class="faq-accordion">
+              {service.faqs.map((faq, index) => (
+                <details class="faq-item" id={`faq-${index}`}>
+                  <summary class="faq-question">
+                    <span>{faq.question}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="chevron"><path d="m6 9 6 6 6-6"/></svg>
+                  </summary>
+                  <p class="faq-answer">{faq.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Specific Gallery Comparison Slider -->
+    <Gallery lang={lang} categoryFilter={service.id as any} />
+
+    <!-- Specific YouTube Showcase Videos -->
+    <VideoGallery lang={lang} categoryFilter={service.id as any} />
+
+    <!-- Local Contact Form with auto-preselected option -->
+    <ContactForm lang={lang} preselectedService={service.id} />
+  </main>
+
+  <Footer lang={lang} />
+  <WhatsAppFAB lang={lang} />
+</Layout>
+
+<style>
+  .service-page-main {
+    padding-top: var(--header-height);
+  }
+
+  .service-hero {
+    background-color: var(--color-bg-alt);
+    border-bottom: 1px solid var(--color-border);
+    padding: 60px 0 80px 0;
+  }
+
+  .back-home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-accent);
+    margin-bottom: 25px;
+    transition: var(--transition-fast);
+  }
+
+  .back-home-link:hover {
+    color: var(--color-accent-dark);
+    transform: translateX(-4px);
+  }
+
+  .service-badge {
+    background-color: hsl(var(--color-accent-hue), 100%, 94%);
+    color: var(--color-accent-dark);
+    font-weight: 700;
+  }
+
+  .service-hero-title {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+  }
+
+  .service-hero-desc {
+    font-size: clamp(1.05rem, 2vw, 1.2rem);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    max-width: 800px;
+    margin-bottom: 35px;
+  }
+
+  .service-hero-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  /* Details layout grid styling */
+  .details-layout-grid {
+    align-items: start;
+    gap: 50px;
+  }
+
+  .details-section-heading {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 30px;
+    letter-spacing: -0.5px;
+  }
+
+  .detailed-capabilities-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .detailed-capabilities-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    line-height: 1.5;
+  }
+
+  .detailed-capabilities-list li svg {
+    color: var(--color-success);
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+
+  /* FAQ Accordion */
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .faq-item {
+    background-color: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: var(--transition-normal);
+  }
+
+  .faq-item[open] {
+    background-color: white;
+    border-color: var(--color-accent-light);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .faq-question {
+    padding: 18px 24px;
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--color-primary);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    user-select: none;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-question .chevron {
+    color: var(--color-text-muted);
+    transition: var(--transition-fast);
+  }
+
+  .faq-item[open] .faq-question .chevron {
+    transform: rotate(180deg);
+    color: var(--color-accent);
+  }
+
+  .faq-answer {
+    padding: 0 24px 20px 24px;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    border-top: 1px solid transparent;
+  }
+
+  .faq-item[open] .faq-answer {
+    border-top-color: var(--color-border);
+  }
+
+  @media (max-width: 768px) {
+    .service-hero {
+      padding: 40px 0 60px 0;
+    }
+    
+    .details-layout-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    
+    .service-hero-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .service-hero-actions .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

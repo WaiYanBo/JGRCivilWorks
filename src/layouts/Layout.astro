@@ -1,14 +1,20 @@
 ---
 import { translations } from '../data/translations';
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 
 interface Props {
   lang?: 'en' | 'ms' | 'zh';
+  title?: string;
+  description?: string;
 }
 
 const currentLocale = Astro.currentLocale as 'en' | 'ms' | 'zh' || 'en';
-const { lang = currentLocale } = Astro.props;
+const { lang = currentLocale, title, description } = Astro.props;
 const t = translations[lang];
+
+const pageTitle = title || t.meta.title;
+const pageDesc = description || t.meta.description;
 
 // SEO Constants
 const siteUrl = 'https://jgrcivilworks.com'; // Change to final domain
@@ -113,8 +119,8 @@ const schemaData = {
     <meta name="generator" content={Astro.generator} />
     
     <!-- Primary SEO Meta Tags -->
-    <title>{t.meta.title}</title>
-    <meta name="description" content={t.meta.description} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDesc} />
     <meta name="keywords" content={t.meta.keywords} />
     <link rel="canonical" href={canonicalUrl} />
     
@@ -127,21 +133,50 @@ const schemaData = {
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:title" content={t.meta.title} />
-    <meta property="og:description" content={t.meta.description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
     <meta property="og:image" content={`${siteUrl}/hero-cover.jpg`} />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalUrl} />
-    <meta property="twitter:title" content={t.meta.title} />
-    <meta property="twitter:description" content={t.meta.description} />
+    <meta property="twitter:title" content={pageTitle} />
+    <meta property="twitter:description" content={pageDesc} />
     <meta property="twitter:image" content={`${siteUrl}/hero-cover.jpg`} />
 
     <!-- Schema Markup JSON-LD -->
     <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+    
+    <ClientRouter />
   </head>
   <body>
     <slot />
+
+    <script>
+      // Intersection Observer for scroll animation reveals
+      function setupScrollAnimations() {
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '0px 0px -40px 0px'
+        });
+
+        revealElements.forEach(el => observer.observe(el));
+      }
+
+      // Initial load
+      setupScrollAnimations();
+
+      // Re-run animation hooks after Astro View Transitions swap the page content
+      document.addEventListener('astro:after-swap', setupScrollAnimations);
+    </script>
   </body>
 </html>

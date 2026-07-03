@@ -1,0 +1,81 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import ContactFormComponent from '../../components/ContactForm.astro';
+import Footer from '../../components/Footer.astro';
+import WhatsAppFAB from '../../components/WhatsAppFAB.astro';
+import { translations } from '../../data/translations';
+
+const lang = 'zh';
+const t = translations[lang];
+
+const pageCopy = {
+  title: '联系我们的技术专员',
+  subtitle: '我们的服务覆盖整个巴生谷。欢迎随时联系我们进行上门勘测、紧急抢修或获取工程报价。',
+  backHome: '← 返回首页'
+};
+---
+
+<Layout lang={lang} title={`${pageCopy.title} | JGR Civil Works`} description="联系 JGR Civil Works。填写我们的咨询表单，拨打 24/7 紧急热线，或莅临我们位于吉隆坡甲洞的办公室。">
+  <Header lang={lang} />
+  
+  <main class="contact-page-main">
+    <section class="contact-hero">
+      <div class="container animate-slideup">
+        <a href={`/${lang}`} class="back-home-link">{pageCopy.backHome}</a>
+        <span class="badge">快速响应 • 专业勘察</span>
+        <h1 class="contact-hero-title">{pageCopy.title}</h1>
+        <p class="contact-hero-subtitle">{pageCopy.subtitle}</p>
+      </div>
+    </section>
+
+    <ContactFormComponent lang={lang} />
+  </main>
+
+  <Footer lang={lang} />
+  <WhatsAppFAB lang={lang} />
+</Layout>
+
+<style>
+  .contact-page-main {
+    padding-top: var(--header-height);
+  }
+
+  .contact-hero {
+    background-color: var(--color-bg-alt);
+    border-bottom: 1px solid var(--color-border);
+    padding: 60px 0 80px 0;
+  }
+
+  .back-home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-accent);
+    margin-bottom: 25px;
+    transition: var(--transition-fast);
+  }
+
+  .back-home-link:hover {
+    color: var(--color-accent-dark);
+    transform: translateX(-4px);
+  }
+
+  .contact-hero-title {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+  }
+
+  .contact-hero-subtitle {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    max-width: 850px;
+  }
+</style>

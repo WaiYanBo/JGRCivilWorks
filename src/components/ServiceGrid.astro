@@ -9,23 +9,35 @@ const { lang } = Astro.props;
 const t = translations[lang];
 
 // Setup WhatsApp helper function
-const whatsappNumber = '60123456789';
-const getWhatsAppUrl = (msg: string) => {
-  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`;
+const getWhatsAppUrl = (msg?: any) => {
+  return 'https://webjgrcw.wasap.my';
 };
+
+// Setup localized URL routing
+const getServiceUrl = (slug: string) => {
+  if (lang === 'en') return `/services/${slug}`;
+  return `/${lang}/services/${slug}`;
+};
+
+// Localized action tags
+const viewDetailsText = {
+  en: 'Learn More & View Details',
+  ms: 'Ketahui Lebih Lanjut',
+  zh: '了解服务详情与案例'
+}[lang];
 ---
 
 <section id="services" class="section">
   <div class="container">
-    <div class="text-center">
+    <div class="text-center reveal">
       <span class="badge">{t.nav.services}</span>
       <h2 class="section-title">{t.core4.title}</h2>
       <p class="section-subtitle">{t.core4.subtitle}</p>
     </div>
 
     <div class="grid-2 services-grid">
-      {t.core4.services.map((service) => (
-        <article class="service-card" id={`card-${service.id}`}>
+      {t.core4.services.map((service, index) => (
+        <article class={`service-card reveal delay-${(index + 1) * 100}`} id={`card-${service.id}`}>
           <div class="card-header-flex">
             <!-- Dynamic SVG Icons based on ID -->
             <div class="service-icon-wrapper">
@@ -62,7 +74,7 @@ const getWhatsAppUrl = (msg: string) => {
 
           <!-- Core detailed items list -->
           <ul class="service-details-list">
-            {service.details.map((detail) => (
+            {service.details.slice(0, 3).map((detail) => (
               <li>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="check-icon"><path d="M20 6 9 17l-5-5"/></svg>
                 <span>{detail}</span>
@@ -75,30 +87,35 @@ const getWhatsAppUrl = (msg: string) => {
             <strong>Targeted:</strong> {service.keywords.join(', ')}
           </div>
 
-          <!-- Service specific WhatsApp CTA button -->
-          <div class="card-action-bar">
+          <!-- Dual action buttons: View Details & WhatsApp -->
+          <div class="card-action-buttons">
+            <a href={getServiceUrl(service.slug)} class="btn btn-secondary action-btn view-details-btn">
+              <span>{viewDetailsText}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            
             {service.id === 'roofing' && (
-              <a href={getWhatsAppUrl(t.whatsappMsg.roof)} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-block">
+              <a href={getWhatsAppUrl(t.whatsappMsg.roof)} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp action-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                <span>{t.hero.ctaWhatsApp}</span>
+                <span>WhatsApp</span>
               </a>
             )}
             {service.id === 'plumbing' && (
-              <a href={getWhatsAppUrl(t.whatsappMsg.plumbing)} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-block">
+              <a href={getWhatsAppUrl(t.whatsappMsg.plumbing)} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp action-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                <span>{t.hero.ctaWhatsApp}</span>
+                <span>WhatsApp</span>
               </a>
             )}
             {service.id === 'electrical' && (
-              <a href={getWhatsAppUrl(t.whatsappMsg.electrical)} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-block">
+              <a href={getWhatsAppUrl(t.whatsappMsg.electrical)} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp action-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                <span>{t.hero.ctaWhatsApp}</span>
+                <span>WhatsApp</span>
               </a>
             )}
             {service.id === 'handyman' && (
-              <a href={getWhatsAppUrl(t.whatsappMsg.handyman)} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-block">
+              <a href={getWhatsAppUrl(t.whatsappMsg.handyman)} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp action-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                <span>{t.hero.ctaWhatsApp}</span>
+                <span>WhatsApp</span>
               </a>
             )}
           </div>
@@ -169,7 +186,7 @@ const getWhatsAppUrl = (msg: string) => {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    flex-grow: 1; /* Pushes the button to the bottom of the card */
+    flex-grow: 1;
   }
 
   .service-details-list li {
@@ -186,7 +203,6 @@ const getWhatsAppUrl = (msg: string) => {
     flex-shrink: 0;
   }
 
-  /* Hidden SEO tags, keeps code structured for bots */
   .seo-keywords-tagline {
     display: none;
     font-size: 0.8rem;
@@ -197,7 +213,36 @@ const getWhatsAppUrl = (msg: string) => {
     margin-bottom: 20px;
   }
 
-  .card-action-bar {
+  /* Dual Action buttons spacing styles */
+  .card-action-buttons {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 12px;
     margin-top: auto;
+  }
+
+  .action-btn {
+    padding: 12px 16px;
+    font-size: 0.875rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .view-details-btn {
+    background-color: var(--color-bg-alt);
+    border-color: var(--color-border);
+    color: var(--color-primary-light);
+  }
+
+  .view-details-btn:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+  }
+
+  @media (max-width: 576px) {
+    .card-action-buttons {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
   }
 </style>

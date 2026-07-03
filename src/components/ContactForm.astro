@@ -3,9 +3,10 @@ import { translations } from '../data/translations';
 
 interface Props {
   lang: 'en' | 'ms' | 'zh';
+  preselectedService?: string;
 }
 
-const { lang } = Astro.props;
+const { lang, preselectedService } = Astro.props;
 const t = translations[lang];
 ---
 
@@ -40,7 +41,7 @@ const t = translations[lang];
             </div>
             <div class="info-text">
               <strong>{t.contact.phoneLabel}</strong>
-              <p><a href="tel:+60123456789">{t.contact.phoneVal}</a></p>
+              <p><a href="https://webjgrcw.wasap.my" target="_blank" rel="noopener noreferrer">{t.contact.phoneVal}</a></p>
             </div>
           </div>
 
@@ -103,9 +104,9 @@ const t = translations[lang];
           <div class="form-group">
             <label for="user-service">{t.contact.service} *</label>
             <select id="user-service" name="service" required>
-              <option value="" disabled selected>{t.contact.servicePlaceholder}</option>
+              <option value="" disabled={!preselectedService} selected={!preselectedService}>{t.contact.servicePlaceholder}</option>
               {t.core4.services.map(s => (
-                <option value={s.id}>{s.title}</option>
+                <option value={s.id} selected={preselectedService === s.id || preselectedService === s.slug}>{s.title}</option>
               ))}
               {t.secondary.list.map(s => (
                 <option value={s.title}>{s.title}</option>

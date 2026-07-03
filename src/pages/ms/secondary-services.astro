@@ -1,0 +1,103 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import SecondaryServicesComponent from '../../components/SecondaryServices.astro';
+import Footer from '../../components/Footer.astro';
+import WhatsAppFAB from '../../components/WhatsAppFAB.astro';
+import { translations } from '../../data/translations';
+
+const lang = 'ms';
+const t = translations[lang];
+
+const pageCopy = {
+  title: 'Perkhidmatan Ubah Suai & Renovasi',
+  subtitle: 'Daripada kabinet custom dan pemasangan jubin sehingga mengecat serta ubah suai rumah menyeluruh.',
+  introText: 'Selain daripada 4 Perkhidmatan Teras pembaikan kecemasan kami, JGR Civil Works turut menawarkan perkhidmatan menaik taraf struktur, pemasangan kelengkapan custom, dan hiasan dalaman profesional. Krew mahir kami pakar dalam pemasangan jubin berkualiti tinggi, pembinaan table top dapur konkrit bertulang, cat kalis air dinding luar, dan renovasi rumah/pejabat.',
+  backHome: '← Kembali ke Utama'
+};
+---
+
+<Layout lang={lang} title={`${pageCopy.title} | JGR Civil Works`} description="Katalog lengkap perkhidmatan renovasi JGR Civil Works: kabinet custom, pasang jubin, table top dapur konkrit, ubah suai rumah, dan kerja mengecat.">
+  <Header lang={lang} />
+  
+  <main class="secondary-page-main">
+    <section class="secondary-hero">
+      <div class="container animate-slideup">
+        <a href={`/${lang}`} class="back-home-link">{pageCopy.backHome}</a>
+        <span class="badge">Skop Ubah Suai Hartanah</span>
+        <h1 class="secondary-hero-title">{pageCopy.title}</h1>
+        <p class="secondary-hero-subtitle">{pageCopy.subtitle}</p>
+      </div>
+    </section>
+
+    <section class="section secondary-intro-section">
+      <div class="container">
+        <div class="intro-box">
+          <p>{pageCopy.introText}</p>
+        </div>
+      </div>
+    </section>
+
+    <SecondaryServicesComponent lang={lang} />
+  </main>
+
+  <Footer lang={lang} />
+  <WhatsAppFAB lang={lang} />
+</Layout>
+
+<style>
+  .secondary-page-main {
+    padding-top: var(--header-height);
+  }
+
+  .secondary-hero {
+    background-color: var(--color-bg-alt);
+    border-bottom: 1px solid var(--color-border);
+    padding: 60px 0 80px 0;
+  }
+
+  .back-home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-accent);
+    margin-bottom: 25px;
+    transition: var(--transition-fast);
+  }
+
+  .back-home-link:hover {
+    color: var(--color-accent-dark);
+    transform: translateX(-4px);
+  }
+
+  .secondary-hero-title {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+  }
+
+  .secondary-hero-subtitle {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    max-width: 850px;
+  }
+
+  .intro-box {
+    background-color: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 40px;
+    box-shadow: var(--shadow-sm);
+    font-size: 1.1rem;
+    color: var(--color-text-dark);
+    line-height: 1.7;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+</style>

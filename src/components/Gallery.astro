@@ -14,9 +14,10 @@ import handymanAfter from '../assets/gallery/handyman-after.jpg';
 
 interface Props {
   lang: 'en' | 'ms' | 'zh';
+  categoryFilter?: 'roofing' | 'plumbing' | 'electrical' | 'handyman';
 }
 
-const { lang } = Astro.props;
+const { lang, categoryFilter } = Astro.props;
 const t = translations[lang];
 
 const galleryItems = [
@@ -85,6 +86,10 @@ const galleryItems = [
     afterImg: handymanAfter
   }
 ];
+
+const renderedItems = categoryFilter 
+  ? galleryItems.filter(item => item.category === categoryFilter)
+  : galleryItems;
 ---
 
 <section id="gallery" class="section section-alt">
@@ -95,23 +100,25 @@ const galleryItems = [
       <p class="section-subtitle">{t.gallery.subtitle}</p>
     </div>
 
-    <!-- Category selector tabs -->
-    <div class="gallery-filters" role="tablist">
-      {Object.entries(t.gallery.categories).map(([key, label], idx) => (
-        <button 
-          class={`filter-tab ${idx === 0 ? 'active' : ''}`} 
-          role="tab"
-          aria-selected={idx === 0 ? 'true' : 'false'}
-          data-filter={key}
-        >
-          {label}
-        </button>
-      ))}
-    </div>
+    <!-- Category selector tabs - hide if categoryFilter is active -->
+    {!categoryFilter && (
+      <div class="gallery-filters" role="tablist">
+        {Object.entries(t.gallery.categories).map(([key, label], idx) => (
+          <button 
+            class={`filter-tab ${idx === 0 ? 'active' : ''}`} 
+            role="tab"
+            aria-selected={idx === 0 ? 'true' : 'false'}
+            data-filter={key}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+    )}
 
     <!-- Gallery grid -->
     <div class="gallery-grid">
-      {galleryItems.map((item) => (
+      {renderedItems.map((item) => (
         <div class="gallery-card" data-category={item.category}>
           <!-- Slider Comparison Container -->
           <div class="comparison-container">

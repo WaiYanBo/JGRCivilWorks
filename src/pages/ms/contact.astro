@@ -1,0 +1,81 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import ContactFormComponent from '../../components/ContactForm.astro';
+import Footer from '../../components/Footer.astro';
+import WhatsAppFAB from '../../components/WhatsAppFAB.astro';
+import { translations } from '../../data/translations';
+
+const lang = 'ms';
+const t = translations[lang];
+
+const pageCopy = {
+  title: 'Hubungi Pakar Kami',
+  subtitle: 'Liputan menyeluruh di kawasan Lembah Klang. Hubungi kami segera untuk pembaikan kecemasan atau rundingan sebut harga.',
+  backHome: '← Kembali ke Utama'
+};
+---
+
+<Layout lang={lang} title={`${pageCopy.title} | JGR Civil Works`} description="Hubungi JGR Civil Works. Isi borang dalam talian, hubungi talian kecemasan 24/7 kami, emel pejabat kami, atau lawati kami di Kepong, KL.">
+  <Header lang={lang} />
+  
+  <main class="contact-page-main">
+    <section class="contact-hero">
+      <div class="container animate-slideup">
+        <a href={`/${lang}`} class="back-home-link">{pageCopy.backHome}</a>
+        <span class="badge">Jaminan Tindakan Segera</span>
+        <h1 class="contact-hero-title">{pageCopy.title}</h1>
+        <p class="contact-hero-subtitle">{pageCopy.subtitle}</p>
+      </div>
+    </section>
+
+    <ContactFormComponent lang={lang} />
+  </main>
+
+  <Footer lang={lang} />
+  <WhatsAppFAB lang={lang} />
+</Layout>
+
+<style>
+  .contact-page-main {
+    padding-top: var(--header-height);
+  }
+
+  .contact-hero {
+    background-color: var(--color-bg-alt);
+    border-bottom: 1px solid var(--color-border);
+    padding: 60px 0 80px 0;
+  }
+
+  .back-home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-accent);
+    margin-bottom: 25px;
+    transition: var(--transition-fast);
+  }
+
+  .back-home-link:hover {
+    color: var(--color-accent-dark);
+    transform: translateX(-4px);
+  }
+
+  .contact-hero-title {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+  }
+
+  .contact-hero-subtitle {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    max-width: 850px;
+  }
+</style>

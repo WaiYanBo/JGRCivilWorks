@@ -1,0 +1,103 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import SecondaryServicesComponent from '../../components/SecondaryServices.astro';
+import Footer from '../../components/Footer.astro';
+import WhatsAppFAB from '../../components/WhatsAppFAB.astro';
+import { translations } from '../../data/translations';
+
+const lang = 'zh';
+const t = translations[lang];
+
+const pageCopy = {
+  title: '整屋翻新与增值工程服务',
+  subtitle: '从系统橱柜定制、瓷砖铺贴到室内外油漆粉刷以及全屋格局重塑改造。',
+  introText: '除了四大核心应急维保服务外，JGR Civil Works 还组建了专业的强项装修与硬装施工队伍。我们专注于承接高标准的地砖与墙砖铺贴、高承重钢筋混凝土厨房灶台（Table Top）砌筑、外墙高弹抗裂防水漆喷涂及大中型住宅与办公室的格局改造扩建。',
+  backHome: '← 返回首页'
+};
+---
+
+<Layout lang={lang} title={`${pageCopy.title} | JGR Civil Works`} description="浏览 JGR Civil Works 室内外翻新与硬装工程服务目录：包括系统橱柜定制、地砖铺贴、混凝土灶台砌筑、房屋加建翻新以及油漆粉刷。">
+  <Header lang={lang} />
+  
+  <main class="secondary-page-main">
+    <section class="secondary-hero">
+      <div class="container animate-slideup">
+        <a href={`/${lang}`} class="back-home-link">{pageCopy.backHome}</a>
+        <span class="badge">翻新与硬装改造项目</span>
+        <h1 class="secondary-hero-title">{pageCopy.title}</h1>
+        <p class="secondary-hero-subtitle">{pageCopy.subtitle}</p>
+      </div>
+    </section>
+
+    <section class="section secondary-intro-section">
+      <div class="container">
+        <div class="intro-box">
+          <p>{pageCopy.introText}</p>
+        </div>
+      </div>
+    </section>
+
+    <SecondaryServicesComponent lang={lang} />
+  </main>
+
+  <Footer lang={lang} />
+  <WhatsAppFAB lang={lang} />
+</Layout>
+
+<style>
+  .secondary-page-main {
+    padding-top: var(--header-height);
+  }
+
+  .secondary-hero {
+    background-color: var(--color-bg-alt);
+    border-bottom: 1px solid var(--color-border);
+    padding: 60px 0 80px 0;
+  }
+
+  .back-home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-accent);
+    margin-bottom: 25px;
+    transition: var(--transition-fast);
+  }
+
+  .back-home-link:hover {
+    color: var(--color-accent-dark);
+    transform: translateX(-4px);
+  }
+
+  .secondary-hero-title {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+  }
+
+  .secondary-hero-subtitle {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    max-width: 850px;
+  }
+
+  .intro-box {
+    background-color: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 40px;
+    box-shadow: var(--shadow-sm);
+    font-size: 1.1rem;
+    color: var(--color-text-dark);
+    line-height: 1.7;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+</style>

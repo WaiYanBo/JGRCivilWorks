@@ -1,0 +1,106 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import SecondaryServicesComponent from '../components/SecondaryServices.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFAB from '../components/WhatsAppFAB.astro';
+import { translations } from '../data/translations';
+
+const lang = 'en';
+const t = translations[lang];
+
+const pageCopy = {
+  title: 'Renovation & Secondary Services',
+  subtitle: 'From custom cabinetry and tiling to painting and complete home refurbishment.',
+  introText: 'Beyond our Core 4 emergency maintenance services, JGR Civil Works provides professional structural upgrades, customized finishes, and interior styling services. Our dedicated crews specialize in high-grade tiling, kitchen masonry, waterproof exterior wall coatings, and structural office/home remodeling.',
+  backHome: '← Back to Home'
+};
+---
+
+<Layout lang={lang} title={`${pageCopy.title} | JGR Civil Works`} description="Detailed catalog of JGR Civil Works renovation services: custom cabinets, tiling, concrete kitchen table tops, home refurbishment, and painting.">
+  <Header lang={lang} />
+  
+  <main class="secondary-page-main">
+    <!-- Hero -->
+    <section class="secondary-hero">
+      <div class="container animate-slideup">
+        <a href="/" class="back-home-link">{pageCopy.backHome}</a>
+        <span class="badge">Property Refurbishment Scope</span>
+        <h1 class="secondary-hero-title">{pageCopy.title}</h1>
+        <p class="secondary-hero-subtitle">{pageCopy.subtitle}</p>
+      </div>
+    </section>
+
+    <!-- Detailed Intro -->
+    <section class="section secondary-intro-section">
+      <div class="container">
+        <div class="intro-box">
+          <p>{pageCopy.introText}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Component Grid list -->
+    <SecondaryServicesComponent lang={lang} />
+  </main>
+
+  <Footer lang={lang} />
+  <WhatsAppFAB lang={lang} />
+</Layout>
+
+<style>
+  .secondary-page-main {
+    padding-top: var(--header-height);
+  }
+
+  .secondary-hero {
+    background-color: var(--color-bg-alt);
+    border-bottom: 1px solid var(--color-border);
+    padding: 60px 0 80px 0;
+  }
+
+  .back-home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-accent);
+    margin-bottom: 25px;
+    transition: var(--transition-fast);
+  }
+
+  .back-home-link:hover {
+    color: var(--color-accent-dark);
+    transform: translateX(-4px);
+  }
+
+  .secondary-hero-title {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+  }
+
+  .secondary-hero-subtitle {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    max-width: 850px;
+  }
+
+  .intro-box {
+    background-color: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 40px;
+    box-shadow: var(--shadow-sm);
+    font-size: 1.1rem;
+    color: var(--color-text-dark);
+    line-height: 1.7;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+</style>

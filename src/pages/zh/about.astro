@@ -1,0 +1,176 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import WhyUs from '../../components/WhyUs.astro';
+import Footer from '../../components/Footer.astro';
+import WhatsAppFAB from '../../components/WhatsAppFAB.astro';
+import { translations } from '../../data/translations';
+
+const lang = 'zh';
+const t = translations[lang];
+
+const aboutCopy = {
+  title: '关于 JGR Civil Works',
+  lead: '十年来，JGR Civil Works 致力于为吉隆坡和雪兰莪的住宅与商业客户提供本地一流的建筑工程、房屋维护和承包商服务。十年口碑，信誉保障。',
+  historyTitle: '发展历史与企业使命',
+  historyBody: 'JGR Civil Works 创立于吉隆坡甲洞区，起初只是一支专门修补房屋和天台渗水的小型工程队。多年来，我们始终坚持符合政府规范的安全标准、提供公开透明的纸质报价单、并承诺高质量的长效保修，因此逐步壮大。今天，我们的专业工程车队和服务网络已覆盖整个巴生谷，提供 24/7 紧急故障抢修支持。',
+  certificationsTitle: '企业资质与安全标准',
+  certItem1: '✓ 马来西亚 CIDB 建筑局注册资质（G3级土木工程施工牌照）',
+  certItem2: '✓ 配备完善的公共责任险（承保额高达 RM 1,000,000）',
+  certItem3: '✓ 电工团队均持有马来西亚能源局（Suruhanjaya Tenaga）专业电工证',
+  certItem4: '✓ 行业领先的 CIDB 认证防水防漏与高压灌浆注胶技术专科',
+  backHome: '← 返回首页'
+};
+---
+
+<Layout lang={lang} title={`${aboutCopy.title} | JGR Civil Works`} description="了解 JGR Civil Works 品牌历史、CIDB 施工资质、公共责任保险以及我们在吉隆坡和雪兰莪累计十年的房屋工程经验。">
+  <Header lang={lang} />
+  
+  <main class="about-page-main">
+    <section class="about-hero">
+      <div class="container animate-slideup">
+        <a href={`/${lang}`} class="back-home-link">{aboutCopy.backHome}</a>
+        <span class="badge">建筑与物业修缮专科</span>
+        <h1 class="about-hero-title">{aboutCopy.title}</h1>
+        <p class="about-hero-subtitle">{aboutCopy.lead}</p>
+      </div>
+    </section>
+
+    <section class="section about-details-section">
+      <div class="container">
+        <div class="grid-2 about-grid">
+          <div class="about-text-col">
+            <h2 class="about-section-heading">{aboutCopy.historyTitle}</h2>
+            <p class="about-paragraph">{aboutCopy.historyBody}</p>
+          </div>
+          
+          <div class="about-cert-col">
+            <h2 class="about-section-heading">{aboutCopy.certificationsTitle}</h2>
+            <ul class="cert-list">
+              <li>
+                <div class="cert-icon-wrapper">✓</div>
+                <span>{aboutCopy.certItem1}</span>
+              </li>
+              <li>
+                <div class="cert-icon-wrapper">✓</div>
+                <span>{aboutCopy.certItem2}</span>
+              </li>
+              <li>
+                <div class="cert-icon-wrapper">✓</div>
+                <span>{aboutCopy.certItem3}</span>
+              </li>
+              <li>
+                <div class="cert-icon-wrapper">✓</div>
+                <span>{aboutCopy.certItem4}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <WhyUs lang={lang} />
+  </main>
+
+  <Footer lang={lang} />
+  <WhatsAppFAB lang={lang} />
+</Layout>
+
+<style>
+  .about-page-main {
+    padding-top: var(--header-height);
+  }
+
+  .about-hero {
+    background-color: var(--color-bg-alt);
+    border-bottom: 1px solid var(--color-border);
+    padding: 60px 0 80px 0;
+  }
+
+  .back-home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-accent);
+    margin-bottom: 25px;
+    transition: var(--transition-fast);
+  }
+
+  .back-home-link:hover {
+    color: var(--color-accent-dark);
+    transform: translateX(-4px);
+  }
+
+  .about-hero-title {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+  }
+
+  .about-hero-subtitle {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    max-width: 850px;
+  }
+
+  .about-grid {
+    gap: 50px;
+    align-items: start;
+  }
+
+  .about-section-heading {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 25px;
+    letter-spacing: -0.5px;
+    color: var(--color-primary);
+  }
+
+  .about-paragraph {
+    font-size: 1.05rem;
+    color: var(--color-text-dark);
+    line-height: 1.7;
+  }
+
+  .cert-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .cert-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+  }
+
+  .cert-icon-wrapper {
+    background-color: var(--color-success-light);
+    color: var(--color-success);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-weight: 800;
+  }
+
+  @media (max-width: 768px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+</style>

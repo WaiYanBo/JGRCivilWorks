@@ -11,14 +11,14 @@ const t = translations[lang];
 
 <section id="why-choose-us" class="section">
   <div class="container">
-    <div class="text-center">
+    <div class="text-center reveal">
       <h2 class="section-title">{t.whyUs.title}</h2>
       <p class="section-subtitle">{t.whyUs.subtitle}</p>
     </div>
 
     <div class="grid-4 why-us-grid">
-      {t.whyUs.items.map((item) => (
-        <div class="why-us-card">
+      {t.whyUs.items.map((item, index) => (
+        <div class={`why-us-card reveal reveal-scale delay-${(index + 1) * 100}`}>
           <div class="why-us-icon-wrapper">
             {item.icon === 'shield-check' && (
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 11 2 2 4-4"/></svg>

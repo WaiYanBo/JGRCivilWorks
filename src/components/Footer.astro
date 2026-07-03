@@ -10,12 +10,22 @@ const t = translations[lang];
 
 const currentYear = new Date().getFullYear();
 
-// Lang link mapper
+// Dynamic language switcher paths based on the current URL path
+const pathname = Astro.url.pathname;
+const cleanPath = pathname.replace(/^\/(ms|zh)/, '').replace(/\/$/, '');
+const baseCleanPath = cleanPath === '' ? '' : cleanPath;
+
 const locales = [
-  { code: 'en', label: 'English', path: '/' },
-  { code: 'ms', label: 'Bahasa Melayu', path: '/ms' },
-  { code: 'zh', label: '简体中文', path: '/zh' }
+  { code: 'en', label: 'English', path: baseCleanPath === '' ? '/' : baseCleanPath },
+  { code: 'ms', label: 'Bahasa Melayu', path: `/ms${baseCleanPath}` },
+  { code: 'zh', label: '简体中文', path: `/zh${baseCleanPath}` }
 ];
+
+// Helper to resolve localized URL links
+const localLink = (path: string) => {
+  if (lang === 'en') return path;
+  return `/${lang}${path}`;
+};
 ---
 
 <footer class="site-footer">
@@ -43,11 +53,11 @@ const locales = [
     <div class="footer-col">
       <h3 class="footer-heading">{t.footer.quickLinks}</h3>
       <ul class="footer-links">
-        <li><a href="#services">{t.nav.services}</a></li>
-        <li><a href="#secondary">{t.nav.secondary}</a></li>
-        <li><a href="#why-choose-us">{t.nav.about}</a></li>
-        <li><a href="#gallery">{t.nav.gallery}</a></li>
-        <li><a href="#contact">{t.nav.contact}</a></li>
+        <li><a href={lang === 'en' ? '/' : `/${lang}`}>{lang === 'en' ? 'Home' : lang === 'ms' ? 'Utama' : '首页'}</a></li>
+        <li><a href={localLink('/secondary-services')}>{t.nav.secondary}</a></li>
+        <li><a href={localLink('/about')}>{t.nav.about}</a></li>
+        <li><a href={localLink('/gallery')}>{t.nav.gallery}</a></li>
+        <li><a href={localLink('/contact')}>{t.nav.contact}</a></li>
       </ul>
     </div>
 
@@ -56,7 +66,7 @@ const locales = [
       <h3 class="footer-heading">{t.footer.services}</h3>
       <ul class="footer-links">
         {t.core4.services.map(s => (
-          <li><a href={`#card-${s.id}`}>{s.title}</a></li>
+          <li><a href={localLink(`/services/${s.slug}`)}>{s.title}</a></li>
         ))}
       </ul>
     </div>

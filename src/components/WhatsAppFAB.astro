@@ -8,9 +8,7 @@ interface Props {
 const { lang } = Astro.props;
 const t = translations[lang];
 
-const whatsappNumber = '60123456789';
-const encodedMsg = encodeURIComponent(t.whatsappMsg.general);
-const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMsg}`;
+const whatsappUrl = 'https://webjgrcw.wasap.my';
 
 // Localized FAB tooltip content
 const tooltipText = {

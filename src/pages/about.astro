@@ -1,0 +1,184 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import WhyUs from '../components/WhyUs.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFAB from '../components/WhatsAppFAB.astro';
+import { translations } from '../data/translations';
+
+const lang = 'en';
+const t = translations[lang];
+
+// Localized About Page Copy
+const aboutCopy = {
+  title: 'About JGR Civil Works',
+  subtitle: 'A Legacy of Professional Property Care & Civil Engineering',
+  lead: 'For over a decade, JGR Civil Works has provided industry-leading civil works, maintenance, and contractor services to commercial and residential property owners across Kuala Lumpur and Selangor.',
+  historyTitle: 'Our History & Mission',
+  historyBody: 'Founded in Kepong, Kuala Lumpur, JGR Civil Works started as a small contracting crew specializing in local roofing repairs. Through our commitment to certified safety standards, upfront written quotes, and 100% durable results, we expanded to offer full-scale plumbing, electrical, and general renovations. Today, our fleet of mobile service trucks serves clients across the Klang Valley with 24/7 emergency dispatch support.',
+  certificationsTitle: 'License & Safety Standards',
+  certItem1: '✓ Registered with CIDB Malaysia (Grade G3 Civil Engineering License)',
+  certItem2: '✓ Full Public Liability Insurance coverage (up to RM 1,000,000)',
+  certItem3: '✓ Electricians certified by Suruhanjaya Tenaga (Energy Commission)',
+  certItem4: '✓ Certified Waterproofing and Slab Grouting Specialists',
+  backHome: '← Back to Home'
+};
+---
+
+<Layout lang={lang} title={`${aboutCopy.title} | JGR Civil Works`} description="Learn more about JGR Civil Works, our CIDB licenses, public liability insurance, and 10+ year legacy of contractor works in KL & Selangor.">
+  <Header lang={lang} />
+  
+  <main class="about-page-main">
+    <!-- About Hero -->
+    <section class="about-hero">
+      <div class="container animate-slideup">
+        <a href="/" class="back-home-link">{aboutCopy.backHome}</a>
+        <span class="badge">Property Care Specialist</span>
+        <h1 class="about-hero-title">{aboutCopy.title}</h1>
+        <p class="about-hero-subtitle">{aboutCopy.lead}</p>
+      </div>
+    </section>
+
+    <!-- Company Details & Certifications -->
+    <section class="section about-details-section">
+      <div class="container">
+        <div class="grid-2 about-grid">
+          <!-- History -->
+          <div class="about-text-col">
+            <h2 class="about-section-heading">{aboutCopy.historyTitle}</h2>
+            <p class="about-paragraph">{aboutCopy.historyBody}</p>
+          </div>
+          
+          <!-- CIDB / Safety -->
+          <div class="about-cert-col">
+            <h2 class="about-section-heading">{aboutCopy.certificationsTitle}</h2>
+            <ul class="cert-list">
+              <li>
+                <div class="cert-icon-wrapper">✓</div>
+                <span>{aboutCopy.certItem1}</span>
+              </li>
+              <li>
+                <div class="cert-icon-wrapper">✓</div>
+                <span>{aboutCopy.certItem2}</span>
+              </li>
+              <li>
+                <div class="cert-icon-wrapper">✓</div>
+                <span>{aboutCopy.certItem3}</span>
+              </li>
+              <li>
+                <div class="cert-icon-wrapper">✓</div>
+                <span>{aboutCopy.certItem4}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us Component -->
+    <WhyUs lang={lang} />
+  </main>
+
+  <Footer lang={lang} />
+  <WhatsAppFAB lang={lang} />
+</Layout>
+
+<style>
+  .about-page-main {
+    padding-top: var(--header-height);
+  }
+
+  .about-hero {
+    background-color: var(--color-bg-alt);
+    border-bottom: 1px solid var(--color-border);
+    padding: 60px 0 80px 0;
+  }
+
+  .back-home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-accent);
+    margin-bottom: 25px;
+    transition: var(--transition-fast);
+  }
+
+  .back-home-link:hover {
+    color: var(--color-accent-dark);
+    transform: translateX(-4px);
+  }
+
+  .about-hero-title {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+  }
+
+  .about-hero-subtitle {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    max-width: 850px;
+  }
+
+  /* Grid layout styling */
+  .about-grid {
+    gap: 50px;
+    align-items: start;
+  }
+
+  .about-section-heading {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 25px;
+    letter-spacing: -0.5px;
+    color: var(--color-primary);
+  }
+
+  .about-paragraph {
+    font-size: 1.05rem;
+    color: var(--color-text-dark);
+    line-height: 1.7;
+  }
+
+  .cert-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .cert-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+  }
+
+  .cert-icon-wrapper {
+    background-color: var(--color-success-light);
+    color: var(--color-success);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-weight: 800;
+  }
+
+  @media (max-width: 768px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+</style>
