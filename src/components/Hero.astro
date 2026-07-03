@@ -1,0 +1,172 @@
+---
+import { translations } from '../data/translations';
+
+interface Props {
+  lang: 'en' | 'ms' | 'zh';
+}
+
+const { lang } = Astro.props;
+const t = translations[lang];
+
+// Helper to pre-fill WhatsApp message
+const whatsappNumber = '60123456789';
+const encodedMsg = encodeURIComponent(t.whatsappMsg.general);
+const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMsg}`;
+---
+
+<section class="hero-section">
+  <!-- Subtle ambient decorative graphics -->
+  <div class="ambient-glow bg-glow-1"></div>
+  <div class="ambient-glow bg-glow-2"></div>
+
+  <div class="container hero-container animate-slideup">
+    <div class="hero-content">
+      <span class="badge hero-badge">{t.hero.badge}</span>
+      <h1 class="hero-title" set:html={t.hero.titleHtml} />
+      <p class="hero-subtitle">{t.hero.subtitle}</p>
+
+      <div class="hero-actions-container">
+        <!-- WhatsApp Call to Action -->
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp hero-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>{t.hero.ctaWhatsApp}</span>
+        </a>
+        
+        <!-- Standard Phone Line -->
+        <a href="tel:+60123456789" class="btn btn-secondary hero-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>{t.hero.ctaCall}</span>
+        </a>
+      </div>
+
+      <!-- Trust Badges banner -->
+      <div class="hero-trust-banner">
+        <span class="trust-item">{t.hero.satisfactionGuarantee}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    padding-top: calc(var(--header-height) + 80px);
+    padding-bottom: 120px;
+    background-color: var(--color-bg-alt);
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* Decorative Ambient Lights (Glassmorphism aesthetics) */
+  .ambient-glow {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.15;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .bg-glow-1 {
+    top: -50px;
+    right: -100px;
+    background-color: var(--color-accent);
+  }
+
+  .bg-glow-2 {
+    bottom: -100px;
+    left: -100px;
+    background-color: hsl(210, 100%, 50%);
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-content {
+    max-width: 850px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-badge {
+    background-color: hsl(var(--color-accent-hue), 100%, 92%);
+    color: var(--color-accent-dark);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 6.5vw, 4.25rem);
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    margin-bottom: 25px;
+    font-weight: 800;
+    color: var(--color-primary);
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin-bottom: 45px;
+    max-width: 780px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .hero-btn {
+    padding: 16px 36px;
+    font-size: 1.05rem;
+    box-shadow: var(--shadow-md);
+  }
+
+  .hero-trust-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-weight: 600;
+    color: var(--color-primary-light);
+    font-size: 0.95rem;
+    border-top: 1px dashed var(--color-border);
+    padding-top: 25px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      padding-top: calc(var(--header-height) + 50px);
+      padding-bottom: 80px;
+    }
+    
+    .hero-actions-container {
+      flex-direction: column;
+      gap: 12px;
+      padding: 0 10px;
+    }
+
+    .hero-btn {
+      width: 100%;
+    }
+  }
+</style>

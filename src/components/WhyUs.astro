@@ -1,0 +1,89 @@
+---
+import { translations } from '../data/translations';
+
+interface Props {
+  lang: 'en' | 'ms' | 'zh';
+}
+
+const { lang } = Astro.props;
+const t = translations[lang];
+---
+
+<section id="why-choose-us" class="section">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-title">{t.whyUs.title}</h2>
+      <p class="section-subtitle">{t.whyUs.subtitle}</p>
+    </div>
+
+    <div class="grid-4 why-us-grid">
+      {t.whyUs.items.map((item) => (
+        <div class="why-us-card">
+          <div class="why-us-icon-wrapper">
+            {item.icon === 'shield-check' && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 11 2 2 4-4"/></svg>
+            )}
+            {item.icon === 'award' && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><path d="M8.21 13.89 7 23l5-3 5 3-1.21-9.12"/></svg>
+            )}
+            {item.icon === 'file-text' && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+            )}
+            {item.icon === 'clock' && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            )}
+          </div>
+          <h3 class="why-us-card-title">{item.title}</h3>
+          <p class="why-us-card-desc">{item.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .why-us-grid {
+    margin-top: 20px;
+  }
+
+  .why-us-card {
+    text-align: center;
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 35px 25px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+  }
+
+  .why-us-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-accent-light);
+  }
+
+  .why-us-icon-wrapper {
+    background-color: hsl(var(--color-accent-hue), 100%, 95%);
+    color: var(--color-accent);
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px auto;
+  }
+
+  .why-us-card-title {
+    font-size: 1.15rem;
+    font-weight: 750;
+    color: var(--color-primary);
+    margin-bottom: 12px;
+  }
+
+  .why-us-card-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+</style>

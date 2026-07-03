@@ -1,0 +1,144 @@
+---
+import { translations } from '../data/translations';
+
+interface Props {
+  lang: 'en' | 'ms' | 'zh';
+}
+
+const { lang } = Astro.props;
+const t = translations[lang];
+
+const whatsappNumber = '60123456789';
+const encodedMsg = encodeURIComponent(t.whatsappMsg.general);
+const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMsg}`;
+
+// Localized FAB tooltip content
+const tooltipText = {
+  en: 'Chat with us!',
+  ms: 'Tanya Kami!',
+  zh: '微信/WhatsApp!'
+}[lang];
+---
+
+<a 
+  href={whatsappUrl} 
+  target="_blank" 
+  rel="noopener noreferrer" 
+  class="whatsapp-fab" 
+  aria-label="Contact us on WhatsApp"
+>
+  <span class="fab-tooltip">{tooltipText}</span>
+  <div class="fab-icon-wrapper">
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="currentColor" class="wa-svg">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.504-5.729-1.464L0 24zm6.066-3.486c1.652.981 3.271 1.498 5.274 1.499 5.486.002 9.948-4.457 9.95-9.947.002-2.66-1.019-5.161-2.87-7.017-1.852-1.856-4.354-2.876-7.016-2.877-5.49 0-9.952 4.46-9.955 9.95-.001 2.05.541 4.053 1.572 5.795l-1.03 3.766 3.864-1.014zm11.315-7.46c-.299-.15-1.762-.87-2.031-.968-.269-.099-.464-.149-.659.15-.195.299-.757.969-.928 1.163-.171.195-.343.218-.642.069-.299-.15-1.265-.467-2.41-1.487-.89-.794-1.49-1.774-1.664-2.073-.173-.299-.018-.46.131-.609.135-.134.299-.349.449-.523.15-.174.2-.299.3-.499.1-.2.05-.374-.025-.523-.075-.15-.659-1.587-.902-2.172-.236-.57-.477-.491-.659-.5-.172-.008-.37-.01-.568-.01-.198 0-.52.074-.792.372-.272.299-1.04 1.018-1.04 2.483 0 1.464 1.066 2.88 1.215 3.079.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.762-.719 2.011-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    </svg>
+  </div>
+</a>
+
+<style>
+  .whatsapp-fab {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 998;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .fab-icon-wrapper {
+    background-color: #25D366;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4);
+    transition: var(--transition-normal);
+    animation: pulse 2s infinite;
+  }
+
+  .fab-tooltip {
+    background-color: #1e293b;
+    color: white;
+    padding: 8px 16px;
+    font-family: var(--font-header);
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(10px);
+    transition: var(--transition-normal);
+    white-space: nowrap;
+    position: relative;
+  }
+
+  /* Tiny arrow for the tooltip speech bubble */
+  .fab-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -6px;
+    transform: translateY(-50%);
+    border-width: 6px 0 6px 6px;
+    border-style: solid;
+    border-color: transparent transparent transparent #1e293b;
+  }
+
+  /* Show tooltip on FAB hover */
+  .whatsapp-fab:hover .fab-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+
+  .whatsapp-fab:hover .fab-icon-wrapper {
+    transform: scale(1.1) rotate(5deg);
+    background-color: #128c7e;
+    box-shadow: 0 12px 36px rgba(18, 140, 126, 0.5);
+  }
+
+  .wa-svg {
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+  }
+
+  /* Pulse animation on the FAB icon */
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+  }
+
+  /* Reposition slightly on smaller screens */
+  @media (max-width: 768px) {
+    .whatsapp-fab {
+      bottom: 20px;
+      right: 20px;
+    }
+    
+    .fab-icon-wrapper {
+      width: 50px;
+      height: 50px;
+    }
+
+    .fab-icon-wrapper svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .fab-tooltip {
+      display: none; /* Hide tooltips on touch screens */
+    }
+  }
+</style>

@@ -1,0 +1,401 @@
+---
+import { Image } from 'astro:assets';
+import { translations } from '../data/translations';
+
+// Import images statically to allow Astro to compile and optimize them
+import roofBefore from '../assets/gallery/roof-before.jpg';
+import roofAfter from '../assets/gallery/roof-after.jpg';
+import plumbingBefore from '../assets/gallery/plumbing-before.jpg';
+import plumbingAfter from '../assets/gallery/plumbing-after.jpg';
+import electricalBefore from '../assets/gallery/electrical-before.jpg';
+import electricalAfter from '../assets/gallery/electrical-after.jpg';
+import handymanBefore from '../assets/gallery/handyman-before.jpg';
+import handymanAfter from '../assets/gallery/handyman-after.jpg';
+
+interface Props {
+  lang: 'en' | 'ms' | 'zh';
+}
+
+const { lang } = Astro.props;
+const t = translations[lang];
+
+const galleryItems = [
+  {
+    id: 1,
+    category: 'roofing',
+    title: {
+      en: 'Concrete Slab Waterproofing',
+      ms: 'Waterproofing Slab Konkrit',
+      zh: '混凝土天台整体防水'
+    },
+    desc: {
+      en: 'Sealed heavy monsoon cracks in a commercial shop-lot slab.',
+      ms: 'Menampal retakan slab konkrit kedai komersial daripada air hujan.',
+      zh: '彻底收缩及灌浆修复商业店面混凝土天台的雨水漏缝。'
+    },
+    beforeImg: roofBefore,
+    afterImg: roofAfter
+  },
+  {
+    id: 2,
+    category: 'plumbing',
+    title: {
+      en: 'Main Water Tank Replacement',
+      ms: 'Penukaran Tangki Air Utama',
+      zh: '主蓄水箱锈蚀更换'
+    },
+    desc: {
+      en: 'Replaced a rusted leaking iron tank with a clean fiber tank.',
+      ms: 'Menukar tangki besi berkarat lama dengan tangki gentian kaca baharu.',
+      zh: '拆除并清空老旧生锈铁制水箱，换装全新防漏玻璃纤维水箱。'
+    },
+    beforeImg: plumbingBefore,
+    afterImg: plumbingAfter
+  },
+  {
+    id: 3,
+    category: 'electrical',
+    title: {
+      en: 'Industrial DB Box Reconstruction',
+      ms: 'Pemasangan Kotak DB Industri',
+      zh: '配电箱（DB Box）安全升级'
+    },
+    desc: {
+      en: 'Cleaned wiring rats nest and upgraded to safety surge breakers.',
+      ms: 'Mengemas pendawaian berselubung tikus & menaik taraf pemutus arus.',
+      zh: '清理杂乱无章的旧线路，升级为规范的防短路与防过载断路器。'
+    },
+    beforeImg: electricalBefore,
+    afterImg: electricalAfter
+  },
+  {
+    id: 4,
+    category: 'handyman',
+    title: {
+      en: 'Kitchen Tiling Refurbishment',
+      ms: 'Ubah Suai Jubin Dapur',
+      zh: '厨房地砖墙面翻新铺设'
+    },
+    desc: {
+      en: 'Leveled broken floor tiles and finished with non-slip ceramic.',
+      ms: 'Membaiki jubin pecah dan menyusun jubin seramik anti-gelincir.',
+      zh: '填平破损起拱的地面，重新铺贴防滑高品质陶瓷地砖。'
+    },
+    beforeImg: handymanBefore,
+    afterImg: handymanAfter
+  }
+];
+---
+
+<section id="gallery" class="section section-alt">
+  <div class="container">
+    <div class="text-center">
+      <span class="badge">{t.nav.gallery}</span>
+      <h2 class="section-title">{t.gallery.title}</h2>
+      <p class="section-subtitle">{t.gallery.subtitle}</p>
+    </div>
+
+    <!-- Category selector tabs -->
+    <div class="gallery-filters" role="tablist">
+      {Object.entries(t.gallery.categories).map(([key, label], idx) => (
+        <button 
+          class={`filter-tab ${idx === 0 ? 'active' : ''}`} 
+          role="tab"
+          aria-selected={idx === 0 ? 'true' : 'false'}
+          data-filter={key}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+
+    <!-- Gallery grid -->
+    <div class="gallery-grid">
+      {galleryItems.map((item) => (
+        <div class="gallery-card" data-category={item.category}>
+          <!-- Slider Comparison Container -->
+          <div class="comparison-container">
+            <!-- After Photo -->
+            <div class="image-after">
+              <Image 
+                src={item.afterImg} 
+                alt={`${item.title[lang]} - After`} 
+                width={500} 
+                height={350} 
+                quality="high"
+                class="comparison-img"
+              />
+              <span class="label-tag tag-after">{t.gallery.afterLabel}</span>
+            </div>
+            
+            <!-- Before Photo (slides/reveals) -->
+            <div class="image-before">
+              <Image 
+                src={item.beforeImg} 
+                alt={`${item.title[lang]} - Before`} 
+                width={500} 
+                height={350} 
+                quality="high"
+                class="comparison-img"
+              />
+              <span class="label-tag tag-before">{t.gallery.beforeLabel}</span>
+            </div>
+            
+            <!-- Slider handle slider-bar -->
+            <div class="slider-handle" aria-hidden="true">
+              <div class="handle-line"></div>
+              <div class="handle-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18-6-6 6-6M15 6l6 6-6 6"/></svg>
+              </div>
+            </div>
+
+            <!-- Fallback Input for comparison -->
+            <input 
+              type="range" 
+              min="0" 
+              max="100" 
+              value="50" 
+              class="comparison-slider" 
+              aria-label="Before and after comparison slider"
+            />
+          </div>
+
+          <div class="gallery-info">
+            <h3 class="gallery-card-title">{item.title[lang]}</h3>
+            <p class="gallery-card-desc">{item.desc[lang]}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery-filters {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 45px;
+  }
+
+  .filter-tab {
+    background-color: white;
+    border: 1px solid var(--color-border);
+    padding: 8px 20px;
+    font-family: var(--font-header);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-primary-light);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: var(--transition-fast);
+  }
+
+  .filter-tab:hover, .filter-tab.active {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    background-color: hsl(var(--color-accent-hue), 100%, 97%);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+
+  @media (max-width: 991px) {
+    .gallery-grid {
+      grid-template-columns: 1fr;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  }
+
+  .gallery-card {
+    background-color: white;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+  }
+
+  .gallery-card.hidden {
+    display: none;
+  }
+
+  /* Comparison Slider styling */
+  .comparison-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .comparison-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .image-after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .image-before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+  }
+
+  .label-tag {
+    position: absolute;
+    bottom: 15px;
+    padding: 4px 10px;
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: 0.75rem;
+    border-radius: var(--radius-sm);
+    color: white;
+    z-index: 4;
+    letter-spacing: 0.5px;
+  }
+
+  .tag-before {
+    left: 15px;
+    background-color: var(--color-primary);
+  }
+
+  .tag-after {
+    right: 15px;
+    background-color: var(--color-accent);
+  }
+
+  /* Slider Input Overlay */
+  .comparison-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: col-resize;
+    z-index: 5;
+    margin: 0;
+  }
+
+  /* Slider line and button representation */
+  .slider-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    pointer-events: none;
+    z-index: 4;
+  }
+
+  .handle-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -1px;
+    width: 2px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  }
+
+  .handle-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    background-color: white;
+    color: var(--color-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    border: 2px solid var(--color-border);
+  }
+
+  /* Info block */
+  .gallery-info {
+    padding: 25px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .gallery-card-title {
+    font-size: 1.25rem;
+    font-weight: 750;
+    margin-bottom: 8px;
+  }
+
+  .gallery-card-desc {
+    font-size: 0.925rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+</style>
+
+<script>
+  // Filter functionality
+  const tabs = document.querySelectorAll('.filter-tab');
+  const cards = document.querySelectorAll('.gallery-card');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      // Set active tab
+      tabs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+
+      const filter = this.getAttribute('data-filter');
+
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-category');
+        if (filter === 'all' || cat === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  // Before & After comparison slider handling
+  const sliderContainers = document.querySelectorAll('.comparison-container');
+
+  sliderContainers.forEach(container => {
+    const slider = container.querySelector('.comparison-slider') as HTMLInputElement;
+    const beforeImage = container.querySelector('.image-before') as HTMLElement;
+    const handle = container.querySelector('.slider-handle') as HTMLElement;
+
+    if (slider && beforeImage && handle) {
+      const updateSlider = () => {
+        const value = slider.value;
+        beforeImage.style.clipPath = `polygon(0 0, ${value}% 0, ${value}% 100%, 0 100%)`;
+        handle.style.left = `${value}%`;
+      };
+      
+      slider.addEventListener('input', updateSlider);
+      // Run once to align
+      updateSlider();
+    }
+  });
+</script>

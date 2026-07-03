@@ -1,0 +1,338 @@
+---
+import { translations } from '../data/translations';
+
+interface Props {
+  lang: 'en' | 'ms' | 'zh';
+}
+
+const { lang } = Astro.props;
+const t = translations[lang];
+---
+
+<section id="contact" class="section">
+  <div class="container">
+    <div class="text-center">
+      <span class="badge">{t.nav.contact}</span>
+      <h2 class="section-title">{t.contact.title}</h2>
+      <p class="section-subtitle">{t.contact.subtitle}</p>
+    </div>
+
+    <div class="grid-2 contact-grid">
+      <!-- Contact Info & Map Column -->
+      <div class="contact-info-panel">
+        <h3 class="info-panel-title">{t.contact.infoTitle}</h3>
+        <p class="info-panel-desc">{t.contact.infoDesc}</p>
+
+        <div class="info-details-list">
+          <div class="info-item">
+            <div class="info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="info-text">
+              <strong>{t.contact.address}</strong>
+              <p>{t.contact.addressVal}</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="info-text">
+              <strong>{t.contact.phoneLabel}</strong>
+              <p><a href="tel:+60123456789">{t.contact.phoneVal}</a></p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </div>
+            <div class="info-text">
+              <strong>{t.contact.emailLabel}</strong>
+              <p><a href="mailto:contact@jgrcivilworks.com">{t.contact.emailVal}</a></p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="info-text">
+              <strong>{t.contact.hoursLabel}</strong>
+              <p>{t.contact.hoursVal}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Semantic map container -->
+        <div class="map-wrapper">
+          <!-- Google Maps static embed, lazy loaded -->
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.567086820546!2d101.63531131525164!3d3.2128000976606014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc47a599dc2329%3A0xe54d89a4cd8d052a!2sTaman%20Perindustrian%20Kepong!5e0!3m2!1sen!2smy!4v1650000000000!5m2!1sen!2smy" 
+            width="100%" 
+            height="250" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Google Maps Location: JGR Civil Works Office in Kepong"
+          ></iframe>
+        </div>
+      </div>
+
+      <!-- Lead Generation Form Card -->
+      <div class="contact-form-card">
+        <form class="lead-form" id="jgr-contact-form">
+          <div class="form-group">
+            <label for="user-name">{t.contact.name} *</label>
+            <input type="text" id="user-name" name="name" required placeholder="e.g. John Doe" />
+          </div>
+
+          <div class="form-group-grid">
+            <div class="form-group">
+              <label for="user-phone">{t.contact.phone} *</label>
+              <input type="tel" id="user-phone" name="phone" required placeholder="e.g. +60123456789" />
+            </div>
+            <div class="form-group">
+              <label for="user-email">{t.contact.email}</label>
+              <input type="email" id="user-email" name="email" placeholder="e.g. john@example.com" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="user-service">{t.contact.service} *</label>
+            <select id="user-service" name="service" required>
+              <option value="" disabled selected>{t.contact.servicePlaceholder}</option>
+              {t.core4.services.map(s => (
+                <option value={s.id}>{s.title}</option>
+              ))}
+              {t.secondary.list.map(s => (
+                <option value={s.title}>{s.title}</option>
+              ))}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="user-message">{t.contact.message} *</label>
+            <textarea id="user-message" name="message" rows="5" required placeholder="e.g. Roof leaks in living room after heavy rain..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block submit-btn" id="form-submit-button">
+            <span class="btn-text">{t.contact.submit}</span>
+            <span class="spinner" style="display: none;"></span>
+          </button>
+
+          <!-- Form Message States -->
+          <div class="form-feedback success-msg" style="display: none;">{t.contact.success}</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-grid {
+    margin-top: 20px;
+    align-items: stretch;
+  }
+
+  .contact-info-panel {
+    background-color: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info-panel-title {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    font-weight: 750;
+  }
+
+  .info-panel-desc {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+  }
+
+  .info-details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 35px;
+  }
+
+  .info-item {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .info-icon {
+    background-color: hsl(var(--color-accent-hue), 100%, 94%);
+    color: var(--color-accent);
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .info-text strong {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--color-primary-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+
+  .info-text p, .info-text a {
+    font-size: 0.95rem;
+    color: var(--color-text-dark);
+    font-weight: 500;
+  }
+
+  .info-text a:hover {
+    color: var(--color-accent);
+  }
+
+  .map-wrapper {
+    margin-top: auto;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Form Styling */
+  .contact-form-card {
+    background-color: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 40px;
+    box-shadow: var(--shadow-md);
+  }
+
+  .lead-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-group-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 576px) {
+    .form-group-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-group label {
+    font-family: var(--font-header);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .form-group input, 
+  .form-group select, 
+  .form-group textarea {
+    padding: 12px 16px;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg-alt);
+    color: var(--color-text-dark);
+    transition: var(--transition-fast);
+    outline: none;
+    font-size: 0.95rem;
+  }
+
+  .form-group input:focus, 
+  .form-group select:focus, 
+  .form-group textarea:focus {
+    border-color: var(--color-accent-light);
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(0, 150, 255, 0.1);
+  }
+
+  .submit-btn {
+    padding: 16px 20px;
+    font-size: 1.05rem;
+    margin-top: 10px;
+    position: relative;
+  }
+
+  .form-feedback {
+    margin-top: 15px;
+    padding: 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .success-msg {
+    background-color: var(--color-success-light);
+    color: var(--color-success);
+    border: 1px solid var(--color-success);
+  }
+
+  /* Tiny spinner animation for submit loader */
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s infinite linear;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
+
+<script>
+  // Simple form submission script (local submission simulation)
+  const contactForm = document.getElementById('jgr-contact-form');
+  const submitBtn = document.getElementById('form-submit-button');
+  const successFeedback = document.querySelector('.success-msg') as HTMLElement;
+
+  if (contactForm && submitBtn && successFeedback) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const btnText = submitBtn.querySelector('.btn-text') as HTMLElement;
+      const btnSpinner = submitBtn.querySelector('.spinner') as HTMLElement;
+
+      // Loading state
+      btnText.style.display = 'none';
+      btnSpinner.style.display = 'inline-block';
+      submitBtn.setAttribute('disabled', 'true');
+
+      // Simulate network request
+      setTimeout(() => {
+        btnText.style.display = 'inline-block';
+        btnSpinner.style.display = 'none';
+        submitBtn.removeAttribute('disabled');
+        successFeedback.style.display = 'block';
+        (contactForm as HTMLFormElement).reset();
+      }, 1200);
+    });
+  }
+</script>

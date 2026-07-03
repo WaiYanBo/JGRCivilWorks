@@ -1,0 +1,181 @@
+---
+import YoutubeEmbed from './YoutubeEmbed.astro';
+import { translations } from '../data/translations';
+
+interface Props {
+  lang: 'en' | 'ms' | 'zh';
+}
+
+const { lang } = Astro.props;
+const t = translations[lang];
+
+// 8 Video showcase items mapping representing the 7-15 YouTube videos
+const videos = [
+  {
+    id: 'dQw4w9WgXcQ', // Placeholder ID. Swap with real client video IDs.
+    title: {
+      en: 'Roof Water Leakage Inspection & PU Injection Grouting',
+      ms: 'Pemeriksaan Kebocoran Air Bumbung & Grouting Suntikan PU',
+      zh: '天台屋顶漏水检修与高压 PU 灌浆注胶施工'
+    }
+  },
+  {
+    id: 'dQw4w9WgXcQ',
+    title: {
+      en: 'Emergency Kitchen Pipe Leak Detection & Fast Repair',
+      ms: 'Kesan Paip Bocor Dapur Kecemasan & Pembaikan Cepat',
+      zh: '厨房水管漏水检测与暗管爆裂紧急修缮'
+    }
+  },
+  {
+    id: 'dQw4w9WgXcQ',
+    title: {
+      en: 'Professional Whole House Rewiring & Safety DB Box Upgrade',
+      ms: 'Pendawaian Semula Seluruh Rumah & Naik Taraf Kotak DB Elektrik',
+      zh: '全屋电线重拉布线与双重防漏电配电箱升级'
+    }
+  },
+  {
+    id: 'dQw4w9WgXcQ',
+    title: {
+      en: 'Master Bathroom Waterproofing Tile Laying & Grouting',
+      ms: 'Kemasan Jubin Kalis Air Bilik Mandi Utama & Grouting Jubin',
+      zh: '主卫浴地砖防滑铺设与墙面美缝工程'
+    }
+  },
+  {
+    id: 'dQw4w9WgXcQ',
+    title: {
+      en: 'Building a Reinforced Concrete Kitchen Table Top with Tiling',
+      ms: 'Pembinaan Table Top Dapur Konkrit Bertulang & Jubin Seramik',
+      zh: '现浇钢筋混凝土厨房灶台灶面瓷砖铺贴'
+    }
+  },
+  {
+    id: 'dQw4w9WgXcQ',
+    title: {
+      en: 'Custom Kitchen Cabinet System Assembly and Wall Bracket Mounting',
+      ms: 'Pemasangan Kabinet Dapur Custom & Gantung Dinding',
+      zh: '整套厨房吊柜定制组装与加固上墙固定'
+    }
+  },
+  {
+    id: 'dQw4w9WgXcQ',
+    title: {
+      en: 'Exterior Wall Waterproof Paint Application & Sealing Works',
+      ms: 'Aplikasi Cat Kalis Air Dinding Luar Rumah & Sealing Retakan',
+      zh: '外墙高弹性防水漆喷涂与抗裂防霉施工'
+    }
+  },
+  {
+    id: 'dQw4w9WgXcQ',
+    title: {
+      en: 'General Handyman Service: Locksmithing & Sliding Door Realignment',
+      ms: 'Servis Handyman Am: Tukar Kunci & Melaraskan Pintu Slaid',
+      zh: '家居日常杂工：更换门锁与推拉玻璃门轨道校正'
+    }
+  }
+];
+---
+
+<section id="videos" class="section">
+  <div class="container">
+    <div class="text-center">
+      <span class="badge">YouTube Showcase</span>
+      <h2 class="section-title">{t.videoSection.title}</h2>
+      <p class="section-subtitle">{t.videoSection.subtitle}</p>
+    </div>
+
+    <div class="grid-2 video-gallery-grid">
+      {videos.map((vid) => (
+        <div class="video-card">
+          <YoutubeEmbed videoId={vid.id} title={vid.title[lang]} />
+          <div class="video-info">
+            <h3 class="video-title">{vid.title[lang]}</h3>
+            <a 
+              href={`https://youtube.com/watch?v=${vid.id}`} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="video-youtube-link"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17z"/><polygon points="10 15 15 12 10 9"/></svg>
+              <span>{t.videoSection.watchButton}</span>
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .video-gallery-grid {
+    margin-top: 20px;
+  }
+
+  .video-card {
+    background-color: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .video-info {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--color-bg-light);
+    border-top: 1px solid var(--color-border);
+    flex-grow: 1;
+  }
+
+  .video-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1.4;
+    max-width: 75%;
+  }
+
+  .video-youtube-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-header);
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #ff0000;
+    background-color: rgba(255, 0, 0, 0.05);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    transition: var(--transition-fast);
+  }
+
+  .video-youtube-link:hover {
+    background-color: #ff0000;
+    color: white;
+  }
+
+  @media (max-width: 576px) {
+    .video-info {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    
+    .video-title {
+      max-width: 100%;
+    }
+    
+    .video-youtube-link {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

@@ -1,0 +1,319 @@
+---
+import { translations } from '../data/translations';
+
+interface Props {
+  lang: 'en' | 'ms' | 'zh';
+}
+
+const { lang } = Astro.props;
+const t = translations[lang];
+
+const currentYear = new Date().getFullYear();
+
+// Lang link mapper
+const locales = [
+  { code: 'en', label: 'English', path: '/' },
+  { code: 'ms', label: 'Bahasa Melayu', path: '/ms' },
+  { code: 'zh', label: '简体中文', path: '/zh' }
+];
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <!-- About column -->
+    <div class="footer-col brand-col">
+      <div class="footer-logo">
+        <div class="logo-icon-sm">JGR</div>
+        <span class="logo-title-sm">JGR CIVIL WORKS</span>
+      </div>
+      <p class="brand-desc">{t.footer.about}</p>
+      
+      <!-- Social icons -->
+      <div class="social-links">
+        <a href="https://youtube.com/@jgrcivilworks" target="_blank" rel="noopener noreferrer" aria-label="JGR Civil Works YouTube Channel">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17z"/><polygon points="10 15 15 12 10 9"/></svg>
+        </a>
+        <a href="https://facebook.com/jgrcivilworks" target="_blank" rel="noopener noreferrer" aria-label="JGR Civil Works Facebook Profile">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick links column -->
+    <div class="footer-col">
+      <h3 class="footer-heading">{t.footer.quickLinks}</h3>
+      <ul class="footer-links">
+        <li><a href="#services">{t.nav.services}</a></li>
+        <li><a href="#secondary">{t.nav.secondary}</a></li>
+        <li><a href="#why-choose-us">{t.nav.about}</a></li>
+        <li><a href="#gallery">{t.nav.gallery}</a></li>
+        <li><a href="#contact">{t.nav.contact}</a></li>
+      </ul>
+    </div>
+
+    <!-- Services list column -->
+    <div class="footer-col">
+      <h3 class="footer-heading">{t.footer.services}</h3>
+      <ul class="footer-links">
+        {t.core4.services.map(s => (
+          <li><a href={`#card-${s.id}`}>{s.title}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Multi-Language Directory column -->
+    <div class="footer-col">
+      <h3 class="footer-heading">Languages</h3>
+      <ul class="footer-links lang-links">
+        {locales.map(l => (
+          <li>
+            <a href={l.path} class={l.code === lang ? 'active' : ''}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="globe-icon"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <span>{l.label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Coverage areas listing -->
+  <div class="container footer-coverage-section">
+    <div class="coverage-bar">
+      <strong>{t.footer.coverage}:</strong>
+      <span class="areas-text">{t.footer.coverageAreas}</span>
+    </div>
+  </div>
+
+  <!-- Bottom copyrights bar -->
+  <div class="footer-bottom">
+    <div class="container footer-bottom-flex">
+      <p>&copy; {currentYear} JGR Civil Works. {t.footer.rights}</p>
+      <div class="footer-legal">
+        <a href="#privacy">Privacy Policy</a>
+        <span class="bullet">•</span>
+        <a href="#terms">Terms & Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-primary);
+    color: hsl(var(--color-primary-hue), 20%, 80%);
+    padding-top: 80px;
+    border-top: 4px solid var(--color-accent);
+    font-size: 0.95rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr 1.2fr 1fr;
+    gap: 50px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  @media (max-width: 991px) {
+    .footer-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+  }
+
+  .brand-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-icon-sm {
+    background: var(--color-accent-gradient);
+    color: white;
+    font-weight: 800;
+    font-size: 0.9rem;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.5px;
+  }
+
+  .logo-title-sm {
+    font-family: var(--font-header);
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+
+  .brand-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: hsl(var(--color-primary-hue), 15%, 70%);
+  }
+
+  .social-links {
+    display: flex;
+    gap: 12px;
+  }
+
+  .social-links a {
+    color: hsl(var(--color-primary-hue), 15%, 75%);
+    background-color: rgba(255, 255, 255, 0.05);
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+  }
+
+  .social-links a:hover {
+    background: var(--color-accent-gradient);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .footer-heading {
+    font-family: var(--font-header);
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 8px;
+  }
+
+  .footer-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background-color: var(--color-accent);
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer-links a {
+    color: hsl(var(--color-primary-hue), 15%, 72%);
+    transition: var(--transition-fast);
+    display: inline-block;
+  }
+
+  .footer-links a:hover {
+    color: var(--color-accent-light);
+    transform: translateX(3px);
+  }
+
+  .lang-links a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lang-links a.active {
+    color: var(--color-accent-light);
+    font-weight: 600;
+  }
+
+  .globe-icon {
+    opacity: 0.6;
+  }
+
+  /* Coverage Section styling */
+  .footer-coverage-section {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .coverage-bar {
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    padding: 18px 24px;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    display: flex;
+    gap: 10px;
+  }
+
+  @media (max-width: 768px) {
+    .coverage-bar {
+      flex-direction: column;
+      gap: 4px;
+    }
+  }
+
+  .coverage-bar strong {
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .areas-text {
+    color: hsl(var(--color-primary-hue), 15%, 72%);
+  }
+
+  /* Footer bottom copyrights bar */
+  .footer-bottom {
+    background-color: hsl(var(--color-primary-hue), 80%, 5%);
+    padding: 25px 0;
+    font-size: 0.85rem;
+    color: hsl(var(--color-primary-hue), 15%, 55%);
+  }
+
+  .footer-bottom-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .footer-legal {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .footer-legal a {
+    color: hsl(var(--color-primary-hue), 15%, 55%);
+  }
+
+  .footer-legal a:hover {
+    color: var(--color-accent-light);
+  }
+
+  .bullet {
+    color: rgba(255, 255, 255, 0.15);
+  }
+
+  @media (max-width: 768px) {
+    .footer-bottom-flex {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

@@ -1,0 +1,131 @@
+---
+import { translations } from '../data/translations';
+
+interface Props {
+  lang: 'en' | 'ms' | 'zh';
+}
+
+const { lang } = Astro.props;
+const t = translations[lang];
+
+// Setup WhatsApp helper function
+const whatsappNumber = '60123456789';
+const encodedMsg = encodeURIComponent(t.whatsappMsg.general);
+const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMsg}`;
+---
+
+<section id="secondary" class="section section-alt">
+  <div class="container">
+    <div class="text-center">
+      <span class="badge">{t.nav.secondary}</span>
+      <h2 class="section-title">{t.secondary.title}</h2>
+      <p class="section-subtitle">{t.secondary.subtitle}</p>
+    </div>
+
+    <div class="grid-3 secondary-grid">
+      {t.secondary.list.map((item, index) => (
+        <div class="secondary-card animate-hover" id={`secondary-card-${index}`}>
+          <div class="card-top-accent"></div>
+          
+          <div class="secondary-header">
+            <!-- Dynamic placeholder SVG icon for styling -->
+            <div class="secondary-icon">
+              {index === 0 && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M12 9v12"/></svg>
+              )}
+              {index === 1 && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+              )}
+              {index === 2 && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              )}
+              {index === 3 && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M7.5 10.5c.828 0 1.5-.672 1.5-1.5s-.672-1.5-1.5-1.5-1.5.672-1.5 1.5.672 1.5 1.5 1.5z"/><path d="M11.5 7.5c.828 0 1.5-.672 1.5-1.5S12.328 4.5 11.5 4.5s-1.5.672-1.5 1.5.672 1.5 1.5 1.5z"/><path d="M16.5 9.5c.828 0 1.5-.672 1.5-1.5S17.328 6.5 16.5 6.5s-1.5.672-1.5 1.5.672 1.5 1.5 1.5z"/><path d="M6 14c0-2 2-3 4-3 1.5 0 3 .5 4 1.5s1 2.5 1 3.5H6v-2z"/></svg>
+              )}
+              {index === 4 && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="8" x="3" y="3" rx="1"/><rect width="8" height="8" x="13" y="3" rx="1"/><rect width="8" height="8" x="3" y="13" rx="1"/><rect width="8" height="8" x="13" y="13" rx="1"/></svg>
+              )}
+            </div>
+            <h3 class="secondary-card-title">{item.title}</h3>
+          </div>
+
+          <p class="secondary-card-desc">{item.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Centralised CTA for general quote -->
+    <div class="secondary-cta text-center">
+      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>{t.hero.ctaWhatsApp}</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .secondary-grid {
+    margin-top: 20px;
+  }
+
+  .secondary-card {
+    background-color: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 30px;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-normal);
+  }
+
+  .secondary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-border);
+  }
+
+  .card-top-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--color-accent-gradient);
+    opacity: 0.8;
+  }
+
+  .secondary-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+  }
+
+  .secondary-icon {
+    color: var(--color-accent);
+    background-color: hsl(var(--color-accent-hue), 100%, 96%);
+    padding: 8px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .secondary-card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  .secondary-card-desc {
+    font-size: 0.925rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .secondary-cta {
+    margin-top: 50px;
+  }
+</style>
